@@ -1,2 +1,10 @@
 #!/bin/bash
-mv {{:upper:}}* /tmp/u
+
+for file in *
+do
+  first_letter=$(echo $file | head -c 1)
+  if [[ "$first_letter" == [A-Z] ]]; then
+    mv "$file" /tmp/u/
+  fi
+done
+
