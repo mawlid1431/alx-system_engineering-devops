@@ -1,0 +1,2 @@
+#!/bin/bsh
+taill /etc/passwd
