@@ -1,1 +1,1 @@
-0x02-shell_redirections filter and redame files
+ 0x02-shell to redirections and filter readme file 
