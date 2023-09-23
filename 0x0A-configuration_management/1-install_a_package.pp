@@ -1,5 +1,7 @@
-# Install puppet-lint
-package { 'puppet-lint':
+# 1-install_a_package.pp
+
+# Ensure the package is installed with pip3
+package { 'Flask':
   ensure   => '2.1.0',
-  provider => 'gem'
+  provider => 'pip3',
 }
