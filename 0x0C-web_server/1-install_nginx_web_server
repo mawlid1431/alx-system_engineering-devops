@@ -1,20 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Installs Nginx
 
-# Update the package repository and install Nginx
-sudo apt-get update
-sudo apt-get -y install nginx
-
-# Create a simple HTML page containing "Hello World!"
-echo "Hello World!" | sudo tee /var/www/html/index.html
-
-# Make sure Nginx is listening on port 80
-if ! (sudo netstat -tuln | grep -q ':80 '); then
-    sudo sed -i 's/^\s*listen\s*80\s*;$/listen 80;/' /etc/nginx/sites-available/default
-    sudo service nginx restart
-fi
-
-# Check if Nginx is running and start it if it's not
-if ! (pgrep -x nginx >/dev/null); then
-    sudo service nginx start
-fi
-
+apt-get update
+apt-get install -y nginx
+echo "Holberton School" > /var/www/html/index.html
+service nginx start
