@@ -1,37 +1,20 @@
-#!/usr/bin/env bash
-# Configures a new ubuntu machine by installing
-# Nginx where it should be listening on port 80
-# Serve a page that would return a Hello World string
-#
-# colors
-blue='\e[1;34m'
-brown='\e[0;33m'
-green='\e[1;32m'
-reset='\033[0m'
+#!/bin/bash
 
-echo -e "${blue}Updating and installing ${brown}Nginx${blue}.${reset}\n"
-sudo apt-get update -y -qq && \
-	 sudo apt-get install nginx -y
+# Update the package repository and install Nginx
+sudo apt-get update
+sudo apt-get -y install nginx
 
-echo -e "\n${blue}Setting up some minor stuff.${reset}\n"
+# Create a simple HTML page containing "Hello World!"
+echo "Hello World!" | sudo tee /var/www/html/index.html
 
-# starting nginx service
-sudo service nginx start
+# Make sure Nginx is listening on port 80
+if ! (sudo netstat -tuln | grep -q ':80 '); then
+    sudo sed -i 's/^\s*listen\s*80\s*;$/listen 80;/' /etc/nginx/sites-available/default
+    sudo service nginx restart
+fi
 
-# allowing nginx on firewall
-sudo ufw allow 'Nginx HTTP'
+# Check if Nginx is running and start it if it's not
+if ! (pgrep -x nginx >/dev/null); then
+    sudo service nginx start
+fi
 
-# Give the user ownership to website files for easy editing
-sudo chown -R "$USER":"$USER" /var/www/html
-sudo chmod -R 755 /var/www
-
-# Backup default index
-cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
-
-# Creating new index
-echo -e "Hello World!" | dd status=none of=/var/www/html/index.nginx-debian.html
-
-# Restarting nginx
-sudo service nginx restart
-
-echo -e "\n${green}Completed.${reset} ✅\n"
