@@ -7,8 +7,3 @@ SysAdmin
  Checker was released at Nov 15, 2023 8:24 PM
  An auto review will be launched at the deadline
 Concepts
-For this project, we expect you to look at these concepts:
-
-Web Server
-Server
-Web stack debugging
